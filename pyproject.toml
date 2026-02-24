@@ -1,0 +1,10 @@
+[project]
+name = "metodos-numericos-excel"
+version = "0.1.0"
+description = "Generador de hoja de calculo con formulas para metodos numericos."
+requires-python = ">=3.11"
+dependencies = ["openpyxl>=3.1,<4"]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
