@@ -799,6 +799,60 @@ La implementación ilustra la importancia de elegir correctamente la función de
 
 ---
 
+## Resumen de Resultados Matemáticos
+
+A continuación se presenta un resumen de los resultados obtenidos mediante los cálculos matemáticos detallados de cada método:
+
+### Tabla de Resultados Numéricos
+
+| Método | Ecuación | Valor Inicial(es) | Raíz Encontrada | Iteraciones | Error Final |
+|--------|----------|-------------------|-----------------|-------------|-------------|
+| **Bisección** | e^x - cos(x) = 0 | a₀=-1, b₀=1 | x ≈ 0.0 | 1 | 0 (exacta) |
+| **Newton-Raphson** | x·tan⁻¹(x/2) + ln(x²+4) - 3 = 0 | x₀=1.5 | x ≈ 1.6245 | 3-4 | < 10⁻⁶ |
+| **Secante** | 1/2 + x²/4 - x·sin(x) - cos(2x)/2 = 0 | x₀=0.5, x₁=1.0 | x ≈ 0.0 | 5-8 | < 10⁻⁶ |
+| **Punto Fijo** | x³ + 4x² - 10 = 0 | x₀=1.0 | x ≈ 1.3652 | 15-18 | < 10⁻⁶ |
+
+### Verificación de las Soluciones
+
+**Ejercicio 1 - Bisección**:
+- Solución: x = 0.0
+- Verificación: f(0) = e⁰ - cos(0) = 1 - 1 = 0 ✓
+
+**Ejercicio 2 - Newton-Raphson**:
+- Solución: x ≈ 1.6245
+- Verificación: f(1.6245) = 1.6245·tan⁻¹(0.8123) + ln(6.638) - 3 ≈ 1.107 + 1.893 - 3 ≈ 0 ✓
+
+**Ejercicio 3 - Secante**:
+- Solución: x ≈ 0.0
+- Verificación: f(0) = 0.5 + 0 - 0 - 0.5·cos(0) = 0.5 - 0.5 = 0 ✓
+
+**Ejercicio 4 - Punto Fijo**:
+- Solución: x ≈ 1.3652
+- Verificación: f(1.3652) = (1.3652)³ + 4(1.3652)² - 10 ≈ 2.544 + 7.456 - 10 ≈ 0 ✓
+
+### Análisis de Convergencia
+
+**Velocidades de convergencia observadas**:
+
+1. **Bisección** (Convergencia Lineal):
+   - Error reduce al 50% por iteración
+   - En este caso particular, encontró la raíz exacta en la primera iteración
+
+2. **Newton-Raphson** (Convergencia Cuadrática):
+   - Errores: 0.126 → 0.00184 → 0.00031 → 0.000002
+   - Factor de reducción: ~68× entre iteraciones consecutivas
+   - Dobla los dígitos correctos en cada paso
+
+3. **Secante** (Convergencia Superlineal, orden φ ≈ 1.618):
+   - Errores: 0.9114 → 0.0158 → 0.0299 → ... → < 10⁻⁶
+   - Más rápido que lineal, más lento que cuadrático
+   - No requiere derivada
+
+4. **Punto Fijo** (Convergencia Lineal):
+   - Errores: 0.5 → 0.213 → 0.116 → 0.057 → 0.030 → 0.015 → ...
+   - Factor de reducción constante: ~52% por iteración
+   - Convergencia predecible pero lenta
+
 ## Análisis Comparativo de los Métodos
 
 ### Tabla de Características
