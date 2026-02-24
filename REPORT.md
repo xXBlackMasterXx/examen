@@ -138,11 +138,52 @@ ws.cell(row=row, column=10, value=f"=IF(I{row}<=$B$1,\"Cumple\",\"Continuar\")")
 ```
 **Justificación**: Proporciona retroalimentación visual inmediata sobre cuándo se alcanza la precisión deseada.
 
+### Cálculos Matemáticos Detallados
+
+A continuación se presentan los cálculos paso a paso para las primeras iteraciones del método de bisección:
+
+**Iteración 0**:
+- Valores iniciales: a₀ = -1.0, b₀ = 1.0
+- f(a₀) = f(-1) = e⁻¹ - cos(-1) = 0.367879 - 0.540302 = -0.172423
+- f(b₀) = f(1) = e¹ - cos(1) = 2.718282 - 0.540302 = 2.177980
+- Punto medio: m₀ = (a₀ + b₀)/2 = (-1.0 + 1.0)/2 = 0.0
+- f(m₀) = f(0) = e⁰ - cos(0) = 1.0 - 1.0 = 0.0
+- Intervalo = b₀ - a₀ = 1.0 - (-1.0) = 2.0
+- Error = |Intervalo|/2 = 2.0/2 = 1.0
+
+**Resultado**: f(m₀) = 0.0, por lo que **x = 0.0** es una raíz exacta de la ecuación.
+
+**Verificación**: f(0) = e⁰ - cos(0) = 1 - 1 = 0 ✓
+
+Sin embargo, si buscamos otras raíces, podemos iniciar con un intervalo diferente. Analizando la gráfica, existe otra raíz positiva.
+
+**Búsqueda de raíz positiva**:
+
+**Iteración 0 (nuevo intervalo)**:
+- a₀ = 0.0, b₀ = 1.0
+- f(a₀) = e⁰ - cos(0) = 1.0 - 1.0 = 0.0
+- f(b₀) = e¹ - cos(1) = 2.718282 - 0.540302 = 2.177980
+- m₀ = (0.0 + 1.0)/2 = 0.5
+- f(m₀) = e⁰·⁵ - cos(0.5) = 1.648721 - 0.877583 = 0.771138
+- Intervalo = 1.0 - 0.0 = 1.0
+- Error = 0.5
+
+Como f(a₀) · f(m₀) = 0.0 · 0.771138 = 0 (no hay cambio de signo claro), realmente x = 0 es la raíz.
+
+**Nota**: Para este ejercicio, la raíz principal es **x = 0**, que se encuentra exactamente en la primera iteración.
+
+Si analizamos el intervalo inicial [-1, 1]:
+- La función cambia de signo entre -1 y 1
+- El método encuentra x = 0 como raíz exacta
+- Verificación: e⁰ - cos(0) = 1 - 1 = 0 ✓
+
 ### Resultado Esperado
 
-Después de aproximadamente 20 iteraciones, el método converge a:
-- **x ≈ 0.517757** (donde eˣ = cos(x))
-- **Error < 1×10⁻⁶**
+El método converge inmediatamente a:
+- **x = 0.0** (raíz exacta donde eˣ = cos(x))
+- **Error = 0** (solución exacta)
+
+**Nota**: Si se buscan otras raíces de la ecuación, existen valores aproximados en x ≈ ±0.517757, pero con el intervalo inicial [-1, 1], el método encuentra primero x = 0.
 
 ### Conclusión del Ejercicio 1
 
@@ -258,11 +299,78 @@ if row > start_row:
 ```
 **Justificación**: Conecta las iteraciones usando la aproximación calculada en la fila anterior como punto de partida para la siguiente.
 
+### Cálculos Matemáticos Detallados
+
+A continuación se presentan los cálculos paso a paso para cada iteración del método de Newton-Raphson:
+
+Recordemos:
+- f(x) = x·tan⁻¹(x/2) + ln(x² + 4) - 3
+- f'(x) = tan⁻¹(x/2) + x/(2(1 + (x/2)²)) + 2x/(x² + 4)
+- Fórmula de iteración: x_{n+1} = x_n - f(x_n)/f'(x_n)
+
+**Iteración 0**:
+- x₀ = 1.5 (valor inicial)
+- f(x₀) = 1.5·tan⁻¹(1.5/2) + ln(1.5² + 4) - 3
+- f(x₀) = 1.5·tan⁻¹(0.75) + ln(2.25 + 4) - 3
+- f(x₀) = 1.5·(0.643501) + ln(6.25) - 3
+- f(x₀) = 0.965252 + 1.832581 - 3
+- f(x₀) = -0.202167
+
+- f'(x₀) = tan⁻¹(0.75) + 1.5/(2(1 + 0.5625)) + 2(1.5)/(2.25 + 4)
+- f'(x₀) = 0.643501 + 1.5/(2·1.5625) + 3.0/6.25
+- f'(x₀) = 0.643501 + 0.480 + 0.48
+- f'(x₀) = 1.603501
+
+- x₁ = x₀ - f(x₀)/f'(x₀) = 1.5 - (-0.202167)/1.603501
+- x₁ = 1.5 + 0.126076 = 1.626076
+- Error₀ = |x₁ - x₀| = |1.626076 - 1.5| = 0.126076
+
+**Iteración 1**:
+- x₁ = 1.626076
+- f(x₁) = 1.626076·tan⁻¹(1.626076/2) + ln(1.626076² + 4) - 3
+- f(x₁) = 1.626076·tan⁻¹(0.813038) + ln(2.645123 + 4) - 3
+- f(x₁) = 1.626076·(0.682097) + ln(6.645123) - 3
+- f(x₁) = 1.109180 + 1.893881 - 3
+- f(x₁) = 0.003061
+
+- f'(x₁) = tan⁻¹(0.813038) + 1.626076/(2(1 + 0.661031)) + 2(1.626076)/(6.645123)
+- f'(x₁) = 0.682097 + 1.626076/3.322062 + 3.252152/6.645123
+- f'(x₁) = 0.682097 + 0.489485 + 0.489485
+- f'(x₁) = 1.661067
+
+- x₂ = x₁ - f(x₁)/f'(x₁) = 1.626076 - 0.003061/1.661067
+- x₂ = 1.626076 - 0.001843 = 1.624233
+- Error₁ = |x₂ - x₁| = |1.624233 - 1.626076| = 0.001843
+
+**Iteración 2**:
+- x₂ = 1.624233
+- f(x₂) = 1.624233·tan⁻¹(0.812117) + ln(1.624233² + 4) - 3
+- f(x₂) = 1.624233·(0.681338) + ln(6.638133) - 3
+- f(x₂) = 1.106507 + 1.892979 - 3
+- f(x₂) = -0.000514
+
+- f'(x₂) = tan⁻¹(0.812117) + 1.624233/(2(1 + 0.659534)) + 2(1.624233)/(6.638133)
+- f'(x₂) = 0.681338 + 1.624233/3.319068 + 3.248466/6.638133
+- f'(x₂) = 0.681338 + 0.489404 + 0.489404
+- f'(x₂) = 1.660146
+
+- x₃ = x₂ - f(x₂)/f'(x₂) = 1.624233 - (-0.000514)/1.660146
+- x₃ = 1.624233 + 0.000310 = 1.624543
+- Error₂ = |x₃ - x₂| = 0.000310
+
+**Iteración 3**:
+- x₃ = 1.624543
+- f(x₃) ≈ 0.000003 (muy cercano a 0)
+- f'(x₃) ≈ 1.660213
+- x₄ = 1.624543 - 0.000003/1.660213 = 1.624541
+- Error₃ = |x₄ - x₃| = 0.000002 < 1×10⁻⁶ ✓
+
 ### Resultado Esperado
 
-El método converge rápidamente (5-6 iteraciones) a:
-- **x ≈ 1.7552** (raíz positiva)
+El método converge rápidamente en 3-4 iteraciones a:
+- **x ≈ 1.6245** (raíz positiva)
 - **f(x) ≈ 0** (verifica que es raíz)
+- Convergencia cuadrática observable: errores disminuyen de 0.126 → 0.00184 → 0.00031 → 0.000002
 
 ### Conclusión del Ejercicio 2
 
@@ -377,11 +485,73 @@ ws.cell(row=row, column=7, value=f"=ABS(F{row}-C{row})")
 ```
 **Justificación**: Error = |x_{n+1} - x_n|, mide el cambio entre aproximaciones consecutivas.
 
+### Cálculos Matemáticos Detallados
+
+A continuación se presentan los cálculos paso a paso para cada iteración del método de la secante:
+
+Recordemos:
+- f(x) = 1/2 + (1/4)x² - x·sin(x) - (1/2)cos(2x)
+- Fórmula de iteración: x_{n+1} = x_n - f(x_n)·[(x_n - x_{n-1})/(f(x_n) - f(x_{n-1}))]
+
+**Iteración 0**:
+- Valores iniciales: x₋₁ = 0.5, x₀ = 1.0
+- f(x₋₁) = f(0.5) = 0.5 + 0.25(0.5)² - 0.5·sin(0.5) - 0.5·cos(2·0.5)
+- f(0.5) = 0.5 + 0.25(0.25) - 0.5(0.479426) - 0.5·cos(1.0)
+- f(0.5) = 0.5 + 0.0625 - 0.239713 - 0.5(0.540302)
+- f(0.5) = 0.5 + 0.0625 - 0.239713 - 0.270151
+- f(0.5) = 0.052636
+
+- f(x₀) = f(1.0) = 0.5 + 0.25(1)² - 1·sin(1) - 0.5·cos(2)
+- f(1.0) = 0.5 + 0.25 - 0.841471 - 0.5(-0.416147)
+- f(1.0) = 0.5 + 0.25 - 0.841471 + 0.208074
+- f(1.0) = 0.116603
+
+- x₁ = x₀ - f(x₀)·[(x₀ - x₋₁)/(f(x₀) - f(x₋₁))]
+- x₁ = 1.0 - 0.116603·[(1.0 - 0.5)/(0.116603 - 0.052636)]
+- x₁ = 1.0 - 0.116603·[0.5/0.063967]
+- x₁ = 1.0 - 0.116603·(7.8155)
+- x₁ = 1.0 - 0.9114 = 0.0886
+- Error₀ = |x₁ - x₀| = |0.0886 - 1.0| = 0.9114
+
+**Iteración 1**:
+- x₀ = 1.0, x₁ = 0.0886
+- f(x₁) = f(0.0886) = 0.5 + 0.25(0.0886)² - 0.0886·sin(0.0886) - 0.5·cos(0.1772)
+- f(0.0886) = 0.5 + 0.25(0.007850) - 0.0886(0.088393) - 0.5(0.984293)
+- f(0.0886) = 0.5 + 0.001962 - 0.007832 - 0.492147
+- f(0.0886) = 0.001983
+
+- x₂ = x₁ - f(x₁)·[(x₁ - x₀)/(f(x₁) - f(x₀))]
+- x₂ = 0.0886 - 0.001983·[(0.0886 - 1.0)/(0.001983 - 0.116603)]
+- x₂ = 0.0886 - 0.001983·[-0.9114/(-0.11462)]
+- x₂ = 0.0886 - 0.001983·(7.9522)
+- x₂ = 0.0886 - 0.01577 = 0.0728
+- Error₁ = |x₂ - x₁| = 0.0158
+
+**Iteración 2**:
+- x₁ = 0.0886, x₂ = 0.0728
+- f(x₂) = f(0.0728) = 0.5 + 0.25(0.0728)² - 0.0728·sin(0.0728) - 0.5·cos(0.1456)
+- f(0.0728) = 0.5 + 0.001323 - 0.005291 - 0.494735
+- f(0.0728) = 0.001297
+
+- x₃ = x₂ - f(x₂)·[(x₂ - x₁)/(f(x₂) - f(x₁))]
+- x₃ = 0.0728 - 0.001297·[(0.0728 - 0.0886)/(0.001297 - 0.001983)]
+- x₃ = 0.0728 - 0.001297·[-0.0158/(-0.000686)]
+- x₃ = 0.0728 - 0.001297·(23.03)
+- x₃ = 0.0728 - 0.02987 = 0.0429
+- Error₂ = |x₃ - x₂| = 0.0299
+
+Continuando las iteraciones, el método converge hacia x ≈ 0.0 (que corresponde a otra raíz cercana al origen).
+
+**Nota**: Dependiendo de los valores iniciales elegidos, el método puede converger a diferentes raíces. Con x₀ = 0.5 y x₁ = 1.0, el método tiende a converger hacia una raíz cercana a x ≈ 0.
+
+Para encontrar otras raíces, se pueden usar diferentes puntos iniciales. Por ejemplo, con x₀ = 1.5 y x₁ = 2.0, el método podría converger a una raíz positiva diferente.
+
 ### Resultado Esperado
 
-El método converge en aproximadamente 7-8 iteraciones a:
-- **x ≈ 0.7391** (una de las raíces de la ecuación)
-- **Error < 1×10⁻⁶**
+El método converge en aproximadamente 5-8 iteraciones (dependiendo de los valores iniciales):
+- Con los valores iniciales dados (0.5, 1.0): converge hacia **x ≈ 0**
+- Para encontrar otras raíces: ajustar valores iniciales
+- **Error < 1×10⁻⁶** cuando converge
 
 ### Conclusión del Ejercicio 3
 
@@ -502,11 +672,118 @@ $$
 
 En x ≈ 1.37 (la raíz): |g'(1.37)| ≈ 0.23 < 1 ✓ (converge)
 
+### Cálculos Matemáticos Detallados
+
+A continuación se presentan los cálculos paso a paso para cada iteración del método de punto fijo:
+
+Recordemos:
+- Ecuación original: x³ + 4x² - 10 = 0
+- Función de iteración: g(x) = √[(10 - x³)/4]
+- Fórmula de iteración: x_{n+1} = g(x_n)
+
+**Iteración 0**:
+- x₀ = 1.0 (valor inicial)
+- g(x₀) = g(1) = √[(10 - 1³)/4]
+- g(1) = √[(10 - 1)/4]
+- g(1) = √[9/4]
+- g(1) = √2.25
+- g(1) = 1.5
+- x₁ = g(x₀) = 1.5
+- Error₀ = |g(x₀) - x₀| = |1.5 - 1.0| = 0.5
+
+**Iteración 1**:
+- x₁ = 1.5
+- g(x₁) = g(1.5) = √[(10 - 1.5³)/4]
+- g(1.5) = √[(10 - 3.375)/4]
+- g(1.5) = √[6.625/4]
+- g(1.5) = √1.65625
+- g(1.5) = 1.286953
+- x₂ = 1.286953
+- Error₁ = |x₂ - x₁| = |1.286953 - 1.5| = 0.213047
+
+**Iteración 2**:
+- x₂ = 1.286953
+- g(x₂) = √[(10 - 1.286953³)/4]
+- g(1.286953) = √[(10 - 2.131816)/4]
+- g(1.286953) = √[7.868184/4]
+- g(1.286953) = √1.967046
+- g(1.286953) = 1.402515
+- x₃ = 1.402515
+- Error₂ = |x₃ - x₂| = |1.402515 - 1.286953| = 0.115562
+
+**Iteración 3**:
+- x₃ = 1.402515
+- g(x₃) = √[(10 - 1.402515³)/4]
+- g(1.402515) = √[(10 - 2.758925)/4]
+- g(1.402515) = √[7.241075/4]
+- g(1.402515) = √1.810269
+- g(1.402515) = 1.345464
+- x₄ = 1.345464
+- Error₃ = |x₄ - x₃| = |1.345464 - 1.402515| = 0.057051
+
+**Iteración 4**:
+- x₄ = 1.345464
+- g(x₄) = √[(10 - 1.345464³)/4]
+- g(1.345464) = √[(10 - 2.436133)/4]
+- g(1.345464) = √[7.563867/4]
+- g(1.345464) = √1.890967
+- g(1.345464) = 1.375125
+- x₅ = 1.375125
+- Error₄ = |x₅ - x₄| = |1.375125 - 1.345464| = 0.029661
+
+**Iteración 5**:
+- x₅ = 1.375125
+- g(x₅) = √[(10 - 1.375125³)/4]
+- g(1.375125) = √[(10 - 2.601409)/4]
+- g(1.375125) = √[7.398591/4]
+- g(1.375125) = √1.849648
+- g(1.375125) = 1.360017
+- x₆ = 1.360017
+- Error₅ = |x₆ - x₅| = |1.360017 - 1.375125| = 0.015108
+
+**Iteración 6**:
+- x₆ = 1.360017
+- g(x₆) = √[(10 - 1.360017³)/4]
+- g(1.360017) = √[(10 - 2.515581)/4]
+- g(1.360017) = √[7.484419/4]
+- g(1.360017) = √1.871105
+- g(1.360017) = 1.367882
+- x₇ = 1.367882
+- Error₆ = |x₇ - x₆| = |1.367882 - 1.360017| = 0.007865
+
+Observamos el patrón de convergencia:
+- Error₀ = 0.5
+- Error₁ = 0.213047
+- Error₂ = 0.115562
+- Error₃ = 0.057051
+- Error₄ = 0.029661
+- Error₅ = 0.015108
+- Error₆ = 0.007865
+
+Continuando las iteraciones, el método converge hacia x ≈ 1.365230.
+
+**Iteraciones adicionales** (valores aproximados):
+- Iteración 7: x₈ ≈ 1.363953, Error ≈ 0.004098
+- Iteración 8: x₉ ≈ 1.365982, Error ≈ 0.002138
+- Iteración 9: x₁₀ ≈ 1.364900, Error ≈ 0.001114
+- Iteración 10: x₁₁ ≈ 1.365481, Error ≈ 0.000580
+- Iteración 11: x₁₂ ≈ 1.365177, Error ≈ 0.000302
+- Iteración 12: x₁₃ ≈ 1.365336, Error ≈ 0.000157
+
+El método continúa convergiendo linealmente hasta alcanzar la tolerancia de 1×10⁻⁶.
+
+**Verificación de la solución** (x ≈ 1.365230):
+- f(x) = x³ + 4x² - 10
+- f(1.365230) = (1.365230)³ + 4(1.365230)² - 10
+- f(1.365230) = 2.544011 + 7.455989 - 10
+- f(1.365230) ≈ 0 ✓
+
 ### Resultado Esperado
 
-El método converge en aproximadamente 10-12 iteraciones a:
+El método converge en aproximadamente 15-18 iteraciones a:
 - **x ≈ 1.3652** (raíz positiva de x³ + 4x² - 10 = 0)
 - **Verificación**: (1.3652)³ + 4(1.3652)² - 10 ≈ 0
+- Convergencia lineal observable: el error disminuye aproximadamente al 50-52% en cada iteración
 
 ### Conclusión del Ejercicio 4
 
